@@ -10,10 +10,10 @@ terraform {
 
 provider "yandex" {
   token     = var.yc_token
-  cloud_id  = var.yc_cloud_id         
-  folder_id = var.yc_folder_id      
-  zone      = var.yc_zone     
-          
+  cloud_id  = var.yc_cloud_id
+  folder_id = var.yc_folder_id
+  zone      = var.yc_zone
+
 }
 
 # Определение ресурса виртуальной машины
@@ -50,13 +50,13 @@ resource "yandex_compute_instance" "nat_instance" {
 
   network_interface {
     subnet_id  = yandex_vpc_subnet.public_subnet.id
-    nat        = true # Публичный IP для NAT-инстанса
+    nat        = true       # Публичный IP для NAT-инстанса
     ip_address = var.nat_ip # Фиксированный внутренний IP
   }
 
   metadata = {
     ssh-keys = "kuliaev:${file("~/.ssh/id_rsa.pub")}"
-    
+
   }
 }
 
@@ -79,13 +79,13 @@ resource "yandex_compute_instance" "public_instance" {
   }
 
   network_interface {
-  subnet_id = yandex_vpc_subnet.public_subnet.id
-  nat       = true # включен!
-}
+    subnet_id = yandex_vpc_subnet.public_subnet.id
+    nat       = true # включен!
+  }
 
   metadata = {
     ssh-keys = "kuliaev:${file("~/.ssh/id_rsa.pub")}"
-    
+
   }
 }
 
@@ -133,7 +133,7 @@ resource "yandex_compute_instance" "private_instance" {
   }
 
   metadata = {
-    ssh-keys = "kuliaev:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys  = "kuliaev:${file("~/.ssh/id_rsa.pub")}"
     user-data = <<-EOF
                 #cloud-config
 
